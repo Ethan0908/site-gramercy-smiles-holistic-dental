@@ -1,3 +1,3 @@
 # Generation brief
 
-This folder contains a completed generated site built from `data/business.json`.
+This folder began as a blank scaffold and has been built from `data/business.json`.
