@@ -1,3 +1,3 @@
 # Generation brief
 
-This folder began as a blank scaffold and has been built from `data/business.json`.
+This generated site uses `data/business.json` as the factual source for a static Next.js page.
