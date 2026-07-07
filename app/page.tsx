@@ -1,149 +1,127 @@
 import business from '../data/business.json';
 
-const phoneHref = `tel:${business.phone.replace(/[^\d+]/g, '')}`;
 const address = '108 E 23rd St, New York, NY 10010';
-const photos = business.photos;
+const phoneHref = `tel:${business.phone.replace(/[^\d+]/g, '')}`;
 
-const visitNotes = [
-  {
-    title: 'Holistic dental care in Gramercy',
-    text: 'A Manhattan dental office for people who want oral health care to feel thoughtful, calm, and connected to overall wellbeing.',
-  },
-  {
-    title: 'Clear next steps',
-    text: 'Call the office or visit the practice website to request an appointment, confirm availability, and ask about the care you need.',
-  },
-  {
-    title: 'Easy to place',
-    text: 'The office is listed at 108 E 23rd St, close to the center of Gramercy and convenient for patients around Manhattan.',
-  },
+const careNotes = [
+  'Dental visits in Gramercy with a quieter, whole-person tone.',
+  'Clear next steps for new and returning patients.',
+  'A Manhattan office location near 23rd Street.',
+];
+
+const visitDetails = [
+  { label: 'Office', value: business.name },
+  { label: 'Area', value: 'Gramercy and Manhattan' },
+  { label: 'Address', value: address },
+  { label: 'Google signal', value: '4.9 rating from 587 reviews' },
 ];
 
 export default function Home() {
   return (
     <main>
       <section className="hero" aria-labelledby="hero-title">
-        <nav className="topbar" aria-label="Primary navigation">
+        <div className="hero__nav" aria-label="Primary">
           <a className="brand" href="#top" aria-label="Gramercy Smiles Holistic Dental home">
-            <span>Gramercy Smiles</span>
-            <small>Holistic Dental</small>
+            <span className="brand__mark" aria-hidden="true">GS</span>
+            <span>
+              <strong>{business.name}</strong>
+              <small>Holistic dental care in Manhattan</small>
+            </span>
           </a>
-          <div className="nav-actions">
-            <a href="#location">Location</a>
-            <a className="phone-link" href={phoneHref}>
-              {business.phone}
-            </a>
-          </div>
-        </nav>
+          <a className="nav-call" href={phoneHref}>{business.phone}</a>
+        </div>
 
-        <div className="hero-grid" id="top">
-          <div className="hero-copy">
-            <p className="eyebrow">Holistic dentist in Manhattan</p>
-            <h1 id="hero-title">Dental care with a calmer Gramercy rhythm.</h1>
-            <p className="hero-text">
-              Gramercy Smiles Holistic Dental serves Manhattan patients from East 23rd Street with a grounded,
-              patient-first approach to dental visits.
+        <div className="hero__grid" id="top">
+          <div className="hero__copy">
+            <p className="eyebrow">Dentist in Gramercy</p>
+            <h1 id="hero-title">A calmer dental visit near East 23rd Street.</h1>
+            <p className="lede">
+              Gramercy Smiles Holistic Dental serves Manhattan patients from a
+              convenient Gramercy address, with scheduling handled directly by
+              phone or through the practice website.
             </p>
             <div className="cta-row" aria-label="Contact options">
-              <a className="button button-primary" href={phoneHref}>
-                Call {business.phone}
-              </a>
-              <a className="button button-secondary" href={business.website}>
-                Visit practice site
-              </a>
+              <a className="button button--primary" href={phoneHref}>Call to schedule</a>
+              <a className="button button--secondary" href={business.website}>Visit practice site</a>
             </div>
           </div>
 
-          <div className="hero-media" aria-label="Office photo">
-            <img src={business.heroImage.url} alt={business.heroImage.alt} />
-            <div className="media-note">
-              <strong>4.9 Google rating</strong>
-              <span>587 reviews</span>
+          <aside className="appointment-panel" aria-label="Practice snapshot">
+            <div className="panel-orbit" aria-hidden="true">
+              <span />
+              <span />
+              <span />
             </div>
-          </div>
+            <p className="panel-kicker">Practice snapshot</p>
+            <dl>
+              <div>
+                <dt>Phone</dt>
+                <dd><a href={phoneHref}>{business.phone}</a></dd>
+              </div>
+              <div>
+                <dt>Location</dt>
+                <dd>{address}</dd>
+              </div>
+              <div>
+                <dt>Reviews</dt>
+                <dd>4.9 Google rating, 587 reviews</dd>
+              </div>
+            </dl>
+          </aside>
         </div>
       </section>
 
-      <section className="fact-strip" aria-label="Practice details">
-        <div>
-          <span>Practice type</span>
-          <strong>{business.businessType}</strong>
-        </div>
-        <div>
-          <span>Service area</span>
-          <strong>Manhattan</strong>
-        </div>
-        <div>
-          <span>Office listing</span>
-          <strong>{address}</strong>
+      <section className="intro-section" aria-label="Care approach">
+        <div className="section-label">What to expect</div>
+        <div className="intro-copy">
+          <h2>Direct information, simple next steps, and a setting that does not feel rushed.</h2>
+          <p>
+            The public listing identifies the practice as a holistic dental
+            office in Manhattan. This page keeps the path practical: confirm
+            fit, call the office, or continue to the practice website for the
+            full patient experience.
+          </p>
         </div>
       </section>
 
-      <section className="intro-section">
-        <div className="section-heading">
-          <p className="eyebrow">What to expect</p>
-          <h2>A dental visit that feels considered, not rushed.</h2>
+      <section className="care-strip" aria-label="Patient priorities">
+        {careNotes.map((note, index) => (
+          <article className="care-note" key={note}>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <p>{note}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="details-section" aria-labelledby="details-title">
+        <div>
+          <p className="eyebrow">Before you call</p>
+          <h2 id="details-title">The essential details are easy to scan.</h2>
         </div>
-        <div className="note-grid">
-          {visitNotes.map((note) => (
-            <article className="note-card" key={note.title}>
-              <h3>{note.title}</h3>
-              <p>{note.text}</p>
-            </article>
+        <div className="detail-list">
+          {visitDetails.map((item) => (
+            <div className="detail-row" key={item.label}>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
           ))}
         </div>
       </section>
 
-      <section className="photo-story" aria-label="Practice photos">
-        <div className="photo-main">
-          <img src={photos[1]?.url ?? business.heroImage.url} alt="Interior view at Gramercy Smiles Holistic Dental" />
-        </div>
-        <div className="photo-copy">
-          <p className="eyebrow">The space</p>
-          <h2>A Manhattan office with a quiet, polished feel.</h2>
-          <p>
-            The supplied practice photos show a clean clinical environment with warm materials and a composed
-            waiting area. The site keeps those images central because they answer a real patient question:
-            what will this visit feel like?
-          </p>
-        </div>
-        <div className="photo-pair">
-          <img src={photos[2]?.url ?? business.heroImage.url} alt="Treatment room at Gramercy Smiles Holistic Dental" />
-          <img src={photos[3]?.url ?? business.heroImage.url} alt="Reception area at Gramercy Smiles Holistic Dental" />
-        </div>
-      </section>
-
-      <section className="contact-section" id="location">
-        <div>
-          <p className="eyebrow">Contact</p>
-          <h2>Ready to schedule or ask a question?</h2>
-          <p>
-            Use the phone number for the fastest direct contact, or open the practice website for appointment details.
-          </p>
-        </div>
+      <section className="contact-section" aria-labelledby="contact-title">
         <div className="contact-card">
-          <a className="contact-line" href={phoneHref}>
-            <span>Phone</span>
-            <strong>{business.phone}</strong>
-          </a>
-          <div className="contact-line">
-            <span>Address</span>
-            <strong>{address}</strong>
+          <p className="eyebrow">Ready to continue?</p>
+          <h2 id="contact-title">Call Gramercy Smiles Holistic Dental.</h2>
+          <p>
+            For appointment availability, patient questions, or directions to
+            the East 23rd Street office, contact the practice directly.
+          </p>
+          <div className="cta-row">
+            <a className="button button--primary" href={phoneHref}>Call {business.phone}</a>
+            <a className="button button--secondary" href={business.website}>Open website</a>
           </div>
-          <a className="button button-primary full-width" href={business.website}>
-            Open practice website
-          </a>
         </div>
       </section>
-
-      <footer>
-        <span>{business.name}</span>
-        <a href={phoneHref}>{business.phone}</a>
-      </footer>
-
-      <a className="mobile-call" href={phoneHref}>
-        Call {business.phone}
-      </a>
     </main>
   );
 }
